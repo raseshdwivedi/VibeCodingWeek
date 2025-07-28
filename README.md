@@ -1,2 +1,2 @@
 # VibeCodingWeek
-VibeCodingWeek
+Cognizant VibeCodingWeek
