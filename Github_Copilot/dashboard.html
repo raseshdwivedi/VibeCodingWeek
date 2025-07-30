@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloud Infrastructure Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(120deg, #e0eafc 0%, #f8fafc 100%);
+      font-family: 'Roboto', 'Montserrat', Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    nav {
+      width: 100vw;
+      background: #fff;
+      box-shadow: 0 2px 16px rgba(44,62,80,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 72px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    nav .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #232526;
+      letter-spacing: 2px;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #232526;
+      font-size: 1.15rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    nav ul li a:hover {
+      color: #66a6ff;
+    }
+    .user-badge {
+      padding: 0.5rem 1.5rem;
+      border-radius: 24px;
+      background: linear-gradient(90deg, #232526 0%, #66a6ff 100%);
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(102,166,255,0.18);
+      margin-left: 1rem;
+      letter-spacing: 1px;
+    }
+    .signout-btn {
+      padding: 0.5rem 1.5rem;
+      border-radius: 24px;
+      border: none;
+      background: linear-gradient(90deg, #e74c3c 0%, #ffb347 100%);
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(231,76,60,0.18);
+      cursor: pointer;
+      margin-left: 1rem;
+    }
+    .dashboard-container {
+      background: rgba(255,255,255,0.95);
+      margin-top: 48px;
+      padding: 56px 80px;
+      border-radius: 36px;
+      box-shadow: 0 16px 48px rgba(44,62,80,0.12), 0 1.5px 6px rgba(0,0,0,0.08);
+      max-width: 640px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(2px);
+    }
+    .dashboard-container::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: -60px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, #66a6ff 0%, #89f7fe 100%);
+      opacity: 0.18;
+      z-index: 0;
+      filter: blur(8px);
+    }
+    .dashboard-container::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      right: -60px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, #232526 0%, #414345 100%);
+      opacity: 0.12;
+      z-index: 0;
+      filter: blur(8px);
+    }
+    h1 {
+      color: #232526;
+      font-size: 3rem;
+      margin: 0 0 18px 0;
+      letter-spacing: 2px;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 2px 8px rgba(102,166,255,0.08);
+    }
+    p {
+      color: #4a6fa5;
+      font-size: 1.25rem;
+      margin: 0 0 18px 0;
+      position: relative;
+      z-index: 1;
+      font-weight: 500;
+    }
+    label {
+      font-size: 1.1rem;
+      color: #232526;
+      font-weight: 600;
+      margin-right: 12px;
+    }
+    select {
+      padding: 10px 24px;
+      font-size: 1rem;
+      border-radius: 16px;
+      border: 1px solid #cfd8dc;
+      background: #f7fbff;
+      font-weight: 500;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(102,166,255,0.08);
+      transition: box-shadow 0.2s;
+    }
+    select:focus {
+      box-shadow: 0 4px 16px rgba(102,166,255,0.18);
+      outline: none;
+    }
+    .template-btn {
+      display: inline-block;
+      padding: 18px 48px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(90deg, #66a6ff 0%, #89f7fe 100%);
+      border: none;
+      border-radius: 32px;
+      box-shadow: 0 2px 12px rgba(102,166,255,0.18);
+      cursor: pointer;
+      margin-bottom: 18px;
+      transition: background 0.3s, box-shadow 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+    .template-btn:hover {
+      background: linear-gradient(90deg, #89f7fe 0%, #66a6ff 100%);
+      box-shadow: 0 4px 24px rgba(102,166,255,0.28);
+    }
+    .action-btn {
+      padding: 12px 32px;
+      font-size: 1.05rem;
+      margin: 0 8px;
+      border-radius: 24px;
+      border: none;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(102,166,255,0.18);
+      cursor: pointer;
+      font-weight: 600;
+      transition: box-shadow 0.2s, background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .action-btn:hover {
+      background: #e0eafc;
+      box-shadow: 0 4px 16px rgba(102,166,255,0.28);
+    }
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.4);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 32px 24px;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(44,62,80,0.18);
+      min-width: 320px;
+      max-width: 90vw;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">Infra Templates</div>
+    <ul>
+      <li><a href="#" id="homeBtn">Home</a></li>
+      <li><a href="#" id="aboutBtn">About</a></li>
+      <li><span class="user-badge">Welcome, test</span></li>
+      <li><button class="signout-btn" id="signout-btn">Sign Out</button></li>
+    </ul>
+  </nav>
+  <div class="dashboard-container">
+    <h1>Cloud Infra Templates</h1>
+    <p>Choose a cloud provider and service to get started with your infrastructure templates.</p>
+    <div style="margin-bottom:24px;">
+      <label for="cloud-select">Select Cloud Provider:</label>
+      <select id="cloud-select">
+        <option value="">--Choose--</option>
+        <option value="aws">AWS</option>
+        <option value="azure">Azure</option>
+      </select>
+    </div>
+    <div id="service-select-wrapper" style="margin-bottom:24px; display:none;">
+      <label for="service-select">Select Service:</label>
+      <select id="service-select">
+        <option value="">--Choose--</option>
+      </select>
+    </div>
+    <button class="template-btn" id="useTemplateBtn">Use Template</button>
+    <div id="actions-container" style="margin-top:32px; display:none;">
+      <button class="action-btn"><i class="fa-solid fa-download" style="margin-right:8px;"></i> Download Template</button>
+      <button class="action-btn"><i class="fa-brands fa-github" style="margin-right:8px;"></i> Clone to Remote Repo</button>
+    </div>
+  </div>
+  <div id="aboutModal" class="modal">
+    <div class="modal-content">
+      <h2 style="margin-top:0;font-family:Montserrat,Arial,sans-serif;">About Cloud Infra Templates</h2>
+      <p style="font-size:1.1rem;color:#232526;">Cloud Infra Templates is a modern web app that helps you quickly select, customize, and deploy cloud infrastructure templates for AWS and Azure. It features a SaaS-inspired design, interactive template selection, and easy access to download or clone templates for your projects.</p>
+      <button id="closeAboutModal" class="modal-close">&times;</button>
+    </div>
+  </div>
+  <script>
+    // Signout logic: redirect to homepage
+    document.getElementById('signout-btn').onclick = function() {
+      window.location.href = '/';
+    };
+    // Dynamic dropdown logic
+    const cloudSelect = document.getElementById('cloud-select');
+    const serviceSelect = document.getElementById('service-select');
+    const serviceWrapper = document.getElementById('service-select-wrapper');
+    cloudSelect.addEventListener('change', function() {
+      if (cloudSelect.value === 'aws') {
+        serviceSelect.innerHTML = `
+          <option value="ec2">EC2</option>
+          <option value="rds">RDS</option>
+          <option value="s3">S3</option>
+        `;
+        serviceWrapper.style.display = 'block';
+      } else if (cloudSelect.value === 'azure') {
+        serviceSelect.innerHTML = `
+          <option value="aks">AKS</option>
+          <option value="vm">VM</option>
+          <option value="storage">Storage</option>
+        `;
+        serviceWrapper.style.display = 'block';
+      } else {
+        serviceSelect.innerHTML = `<option value="">--Choose--</option>`;
+        serviceWrapper.style.display = 'none';
+      }
+    });
+    document.getElementById('useTemplateBtn').onclick = function() {
+      document.getElementById('actions-container').style.display = 'flex';
+    };
+    document.getElementById('aboutBtn').onclick = function() {
+      document.getElementById('aboutModal').style.display = 'flex';
+    };
+    document.getElementById('closeAboutModal').onclick = function() {
+      document.getElementById('aboutModal').style.display = 'none';
+    };
+  </script>
+</body>
+</html>

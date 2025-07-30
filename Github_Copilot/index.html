@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infra Templates</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    html, body {
+      height: 100%;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: linear-gradient(120deg, #f8fafc 0%, #e0eafc 100%);
+      font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      width: 100vw;
+      overflow-x: hidden;
+    }
+    nav {
+      width: 100vw;
+      min-width: 0;
+      background: #fff;
+      box-shadow: 0 2px 16px rgba(44,62,80,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5vw;
+      height: 72px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    nav .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #232526;
+      letter-spacing: 2px;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #232526;
+      font-size: 1.15rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    nav ul li a:hover {
+      color: #66a6ff;
+    }
+    .main-card {
+      background: #fff;
+      margin-top: 48px;
+      padding: 5vw 5vw;
+      border-radius: 36px;
+      box-shadow: 0 16px 48px rgba(44,62,80,0.12), 0 1.5px 6px rgba(0,0,0,0.08);
+      max-width: 700px;
+      width: 90vw;
+      min-width: 280px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .main-card h1 {
+      font-size: clamp(2rem, 6vw, 3rem);
+      margin: 0 0 18px 0;
+      letter-spacing: 2px;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 2px 8px rgba(102,166,255,0.08);
+    }
+    .main-card p {
+      color: #4a6fa5;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      margin: 0 0 18px 0;
+      position: relative;
+      z-index: 1;
+      font-weight: 500;
+    }
+    .main-card .get-started-btn {
+      display: inline-block;
+      padding: 18px 48px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(90deg, #66a6ff 0%, #89f7fe 100%);
+      border: none;
+      border-radius: 32px;
+      box-shadow: 0 2px 12px rgba(102,166,255,0.18);
+      cursor: pointer;
+      margin-top: 32px;
+      transition: background 0.3s, box-shadow 0.3s;
+      position: relative;
+      z-index: 1;
+      width: 80vw;
+      max-width: 320px;
+    }
+    .main-card .get-started-btn:hover {
+      background: linear-gradient(90deg, #89f7fe 0%, #66a6ff 100%);
+      box-shadow: 0 4px 24px rgba(102,166,255,0.28);
+    }
+    /* Modal styles */
+    #loginModal {
+      display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);z-index:1000;justify-content:center;align-items:center;
+    }
+    #loginModal .modal-content {
+      background:#fff;padding:32px 24px;border-radius:16px;box-shadow:0 4px 24px rgba(44,62,80,0.18);min-width:260px;max-width:95vw;position:relative;
+    }
+    #closeModal {
+      position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.5rem;cursor:pointer;
+    }
+    #loginError {
+      color:#e74c3c;margin-top:12px;display:none;
+    }
+    @media (max-width: 600px) {
+      nav {
+        padding: 0 2vw;
+        height: 56px;
+      }
+      .main-card {
+        padding: 8vw 2vw;
+        margin-top: 24px;
+        border-radius: 18px;
+        max-width: 98vw;
+      }
+      .main-card h1 {
+        font-size: 2rem;
+      }
+      .main-card .get-started-btn {
+        padding: 12px 8vw;
+        font-size: 1rem;
+        max-width: 98vw;
+      }
+      #loginModal .modal-content {
+        padding: 18px 8px;
+        min-width: 180px;
+        max-width: 98vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">Infra Templates</div>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+  <div class="main-card">
+    <h1>Launch Your Cloud Infrastructure in Minutes</h1>
+    <p>Choose a template, customize, and deploy instantly. Perfect for SaaS, startups, and enterprise teams.</p>
+    <button class="get-started-btn" id="getStartedBtn">Get Started</button>
+  </div>
+  <!-- Login Modal (no signup) -->
+  <div id="loginModal">
+    <div class="modal-content">
+      <h2 style="margin-top:0;font-family:Montserrat,Arial,sans-serif;">Login</h2>
+      <form id="loginForm">
+        <input type="text" id="username" name="username" placeholder="Username" required style="width:100%;margin-bottom:12px;padding:8px 12px;border-radius:8px;border:1px solid #ccc;font-size:1rem;">
+        <input type="password" id="password" name="password" placeholder="Password" required style="width:100%;margin-bottom:18px;padding:8px 12px;border-radius:8px;border:1px solid #ccc;font-size:1rem;">
+        <button type="submit" style="width:100%;padding:10px 0;background:linear-gradient(90deg,#66a6ff,#89f7fe);color:#fff;border:none;border-radius:8px;font-size:1.1rem;font-weight:500;cursor:pointer;">Login</button>
+      </form>
+      <button id="closeModal" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.5rem;cursor:pointer;">&times;</button>
+      <div id="loginError"></div>
+    </div>
+  </div>
+  <script>
+    // Modal logic
+    document.getElementById('getStartedBtn').onclick = function() {
+      document.getElementById('loginModal').style.display = 'flex';
+      document.getElementById('loginError').style.display = 'none';
+    };
+    document.getElementById('closeModal').onclick = function () {
+      document.getElementById('loginModal').style.display = 'none';
+    };
+    // Login form submit
+    document.getElementById('loginForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        if (res.ok) {
+          window.location.href = '/dashboard.html';
+        } else {
+          const data = await res.json();
+          document.getElementById('loginError').textContent = data.error || 'Login failed!';
+          document.getElementById('loginError').style.display = 'block';
+        }
+      } catch (err) {
+        document.getElementById('loginError').textContent = 'Network error!';
+        document.getElementById('loginError').style.display = 'block';
+      }
+    };
+  </script>
+</body>
+</html>
